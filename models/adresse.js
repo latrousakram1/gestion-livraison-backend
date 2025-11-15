@@ -1,14 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
-  const Adresse = sequelize.define('Adresse', {
-    rue: DataTypes.STRING,
-    ville: DataTypes.STRING,
-    code_postal: DataTypes.STRING,
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-  Adresse.associate = models => {
-    Adresse.belongsTo(models.Client, { foreignKey: 'client_id' });
-    Adresse.hasMany(models.Livraison, { foreignKey: 'adresse_id' });
-  };
+const Adresse = sequelize.define('Adresse', {
+  rue: { type: DataTypes.STRING, allowNull: false },
+  ville: { type: DataTypes.STRING, allowNull: false },
+  province: { type: DataTypes.STRING, allowNull: false },
+  code_postal: { type: DataTypes.STRING, allowNull: false }
+});
 
-  return Adresse;
-};
+module.exports = Adresse;

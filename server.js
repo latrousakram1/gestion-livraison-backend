@@ -5,11 +5,12 @@ const { sequelize } = require('./models');
 
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Serveur opérationnel ✅'));
-
 app.use('/clients', require('./routes/clientRoutes'));
+app.use('/adresses', require('./routes/adresseRoutes'));
 app.use('/livraisons', require('./routes/livraisonRoutes'));
 app.use('/utilisateurs', require('./routes/utilisateurRoutes'));
+app.use('/roles', require('./routes/roleRoutes'));
+app.use('/statuts', require('./routes/statutRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {

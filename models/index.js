@@ -1,23 +1,34 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
-const db = {};
-fs.readdirSync(__dirname)
-  .filter(file => file !== 'index.js')
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+const Client = require('./Client');
+const Adresse = require('./Adresse');
+const Livraison = require('./Livraison');
+const Utilisateur = require('./Utilisateur');
+const Role = require('./Role');
+const Statut = require('./Statut');
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// Relations
+Client.hasMany(Livraison, { foreignKey: 'client_id' });
+Livraison.belongsTo(Client, { foreignKey: 'client_id' });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+Adresse.hasMany(Livraison, { foreignKey: 'adresse_id' });
+Livraison.belongsTo(Adresse, { foreignKey: 'adresse_id' });
 
-module.exports = db;
+Utilisateur.hasMany(Livraison, { foreignKey: 'utilisateur_id' });
+Livraison.belongsTo(Utilisateur, { foreignKey: 'utilisateur_id' });
+
+Statut.hasMany(Livraison, { foreignKey: 'statut_id' });
+Livraison.belongsTo(Statut, { foreignKey: 'statut_id' });
+
+Role.hasMany(Utilisateur, { foreignKey: 'role_id' });
+Utilisateur.belongsTo(Role, { foreignKey: 'role_id' });
+
+module.exports = {
+  sequelize,
+  Client,
+  Adresse,
+  Livraison,
+  Utilisateur,
+  Role,
+  Statut
+};

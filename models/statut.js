@@ -1,11 +1,8 @@
-module.exports = (sequelize, DataTypes) => {
-  const Statut = sequelize.define('Statut', {
-    nom: DataTypes.STRING,
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-  Statut.associate = models => {
-    Statut.hasMany(models.Livraison, { foreignKey: 'statut_id' });
-  };
+const Statut = sequelize.define('Statut', {
+  nom: { type: DataTypes.STRING, allowNull: false }
+});
 
-  return Statut;
-};
+module.exports = Statut;

@@ -1,15 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-  const Livraison = sequelize.define('Livraison', {
-    description: DataTypes.TEXT,
-    date_livraison: DataTypes.DATE,
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-  Livraison.associate = models => {
-    Livraison.belongsTo(models.Client, { foreignKey: 'client_id' });
-    Livraison.belongsTo(models.Adresse, { foreignKey: 'adresse_id' });
-    Livraison.belongsTo(models.Utilisateur, { foreignKey: 'utilisateur_id' });
-    Livraison.belongsTo(models.Statut, { foreignKey: 'statut_id' });
-  };
+const Livraison = sequelize.define('Livraison', {
+  description: { type: DataTypes.STRING, allowNull: false },
+  date_livraison: { type: DataTypes.DATEONLY, allowNull: false },
+  client_id: { type: DataTypes.INTEGER, allowNull: false },
+  adresse_id: { type: DataTypes.INTEGER, allowNull: false },
+  utilisateur_id: { type: DataTypes.INTEGER, allowNull: false },
+  statut_id: { type: DataTypes.INTEGER, allowNull: false }
+});
 
-  return Livraison;
-};
+module.exports = Livraison;

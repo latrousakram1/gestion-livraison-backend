@@ -1,14 +1,10 @@
-module.exports = (sequelize, DataTypes) => {
-  const Client = sequelize.define('Client', {
-    nom: DataTypes.STRING,
-    email: DataTypes.STRING,
-    telephone: DataTypes.STRING,
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-  Client.associate = models => {
-    Client.hasMany(models.Adresse, { foreignKey: 'client_id' });
-    Client.hasMany(models.Livraison, { foreignKey: 'client_id' });
-  };
+const Client = sequelize.define('Client', {
+  nom: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false, unique: true },
+  telephone: { type: DataTypes.STRING, allowNull: false }
+});
 
-  return Client;
-};
+module.exports = Client;

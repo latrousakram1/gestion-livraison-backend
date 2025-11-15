@@ -1,11 +1,8 @@
-module.exports = (sequelize, DataTypes) => {
-  const Role = sequelize.define('Role', {
-    nom: DataTypes.STRING,
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-  Role.associate = models => {
-    Role.hasMany(models.Utilisateur, { foreignKey: 'role_id' });
-  };
+const Role = sequelize.define('Role', {
+  nom: { type: DataTypes.STRING, allowNull: false }
+});
 
-  return Role;
-};
+module.exports = Role;

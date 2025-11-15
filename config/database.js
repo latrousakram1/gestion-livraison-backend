@@ -1,15 +1,15 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.DB_NAME,       // gestion_livraison
+  process.env.DB_USER,       // akram_latrous
+  process.env.DB_PASSWORD,   // Marka123456
   {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
-    logging: false,
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 3306,
+    dialect: 'mysql'         
   }
 );
 
-module.exports = sequelize;
+module.exports = { sequelize };
