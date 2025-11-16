@@ -1,17 +1,51 @@
 const { Client } = require('../models');
 
-exports.getAll = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
-  const offset = (page - 1) * limit;
-  const clients = await Client.findAndCountAll({ limit: parseInt(limit), offset });
-  res.json({ total: clients.count, page: parseInt(page), data: clients.rows });
-};
-
 exports.create = async (req, res) => {
   try {
     const client = await Client.create(req.body);
     res.status(201).json(client);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getAll = async (req, res) => {
+  try {
+    const clients = await Client.findAll();
+    res.json(clients);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getById = async (req, res) => {
+  try {
+    const client = await Client.findByPk(req.params.id);
+    if (!client) return res.status(404).json({ error: 'Client non trouvé' });
+    res.json(client);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    const client = await Client.findByPk(req.params.id);
+    if (!client) return res.status(404).json({ error: 'Client non trouvé' });
+    await client.update(req.body);
+    res.json(client);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.delete = async (req, res) => {
+  try {
+    const client = await Client.findByPk(req.params.id);
+    if (!client) return res.status(404).json({ error: 'Client non trouvé' });
+    await client.destroy();
+    res.json({ message: 'Client supprimé' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

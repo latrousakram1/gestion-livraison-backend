@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/statutController');
+const statutController = require('../controllers/statutController');
 
-router.get('/', controller.getAll);
-router.post('/', controller.create);
+router.get('/', statutController.getAll);
+router.post('/', statutController.create);
+router.get('/:id', statutController.getById);
+router.put('/:id', statutController.update);
+router.delete('/:id', statutController.delete);
 
 module.exports = router;

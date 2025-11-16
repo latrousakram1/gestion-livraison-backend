@@ -7,7 +7,6 @@ const Utilisateur = require('./Utilisateur');
 const Role = require('./Role');
 const Statut = require('./Statut');
 
-// Relations
 Client.hasMany(Livraison, { foreignKey: 'client_id' });
 Livraison.belongsTo(Client, { foreignKey: 'client_id' });
 
