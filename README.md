@@ -38,4 +38,4 @@ Fonctionnalités
 Auteur
 Akram Latrous
 Étudiant en intelligence artificielle à La Cité collégiale
-Contact : akram@example.com
+Contact : latrousakram.com
